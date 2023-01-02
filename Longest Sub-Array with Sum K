@@ -1,0 +1,51 @@
+//not optimized  1 time limit warning
+public static int lenOfLongSubarr (int A[], int N, int K) {
+        //Complete the function
+        int n=A.length;
+        int res=0,max=0,sum=0,f=0;
+        for(int i=0; i<n; i++){
+            sum=0;res=0;f=0;
+            for(int j=i;j<n; j++){
+                sum+=A[j];
+                res++;
+                if(sum==K)f=res;
+            }
+            if(max<f){max=f;}
+        }return max;
+    }
+//not optimized code 2 timelimit warning
+//Sliding window is used
+public static int lenOfLongSubarr (int A[], int N, int K) {
+        //Complete the function
+        int wr=0,wl=0,bestw=0,bestl=0;int total=0;
+        while(wr<N)
+        {
+            if(total<K)
+            {
+                total+=A[wr];
+                wr++;
+            }
+            if(total==K)
+            {
+                wl++;
+            }
+            if((wr-wl)>bestw && total<K)
+            {
+                bestw=wr-wl;
+                bestl=wl;
+            }
+        }
+        return bestw;
+    }
+//runned on leetcode
+public int subarraySum(int[] nums, int k) {
+        int n=nums.length;
+        int res=0;
+        for(int i=0; i<n; i++){
+            int sum=0;
+            for(int j=i;j<n; j++){
+                sum+=nums[j];
+                if(sum==k) res++;
+            }
+        }return res;
+    }
