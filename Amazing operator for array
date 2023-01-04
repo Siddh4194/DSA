@@ -1,0 +1,10 @@
+//using operator see the no which is appear only for 1 time
+class Sol
+{
+    public static int search(int A[], int N)
+    {
+        int sum=0;
+        for(int i:A) sum^=i;
+        return sum;
+    }
+}
