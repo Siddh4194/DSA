@@ -1,0 +1,19 @@
+//find the number that appears once, and other numbers twice.
+class Sol
+{
+    public static int search(int A[], int N)
+    {
+        int t=0;
+        // your code here
+        for(int i:A)
+        {
+            t=0;
+            for(int j=0;j<N;j++)
+            {
+                if(i==A[j]) t++;
+            }
+            if(t==1) return i;
+        }
+        return -1;
+    }
+}
