@@ -1,0 +1,27 @@
+//find missing in array
+int[] ans=new int[n];
+        HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
+        Arrays.sort(arr);
+        for(int i:arr){
+            if(!map.containsKey(i)){
+                map.put(i,1);
+            }
+            else{
+                map.put(i,map.get(i)+1);
+            }
+        }
+        Set<Integer> e = map.keySet();
+        int j=1,k=0;
+        for(int s:e){
+            if(map.get(s)==2){
+                ans[k++] = s;
+            }
+        }
+        for(int s:e){
+            if (j>n) break;
+            if(s!=j){
+                ans[k++] = j;
+            }
+            j++;
+        }
+        return ans;
