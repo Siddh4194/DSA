@@ -71,3 +71,32 @@ class Solve {
         return ans;
     }
 }
+Count Reverse Pairs
+You are given an array of N integers arr, find the count of reverse pairs. 
+
+A pair of indices (i, j) is said to be a reverse pair if both the following conditions are met:
+
+0 <= i < j < N 
+arr[i] > 2 * arr[j]
+
+class Solution {
+    public int countRevPairs(int N, int arr[]) {
+        // Code here
+        int i=0,t=0;
+        while(i<=(N-2)){
+            for(int j=i+1;j<N;j++){
+                if(arr[i]>(2*arr[j])){
+                    t++;
+                }
+            }i++;
+        }
+        return t;
+    }
+}
+
+Test Cases Passed: 
+10114 /10120
+Time Limit Exceeded
+
+Your program took more time than expected.Expected Time Limit : 5.24sec
+Hint : Please optimize your code and submit again
