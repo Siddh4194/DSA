@@ -1,0 +1,114 @@
+//peak element in array
+//1st aproach
+class Solution
+{
+	// Function to find the peak element
+	// arr[]: input array
+	// n: size of array a[]
+	int binSearch(int[] arr,int low,int high,int n){
+	    int mid = low + (high - low);
+	    if(mid == 0 || arr[mid-1] <= arr[mid] && (mid == n-1 || arr[mid+1] <= arr[mid])){
+	        return mid;
+	    }
+	    else if(mid > 0 && arr[mid] < arr[mid-1]){
+    	    return binSearch(arr,low,mid-1,n);    
+	    }
+	    return binSearch(arr,mid+1,high,n);
+	}
+	public int peakElement(int[] arr,int n)
+    {
+       //add code here.
+       return binSearch(arr,0,n-1,n);
+    }
+}
+
+//2nd aproach
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int n = nums.length;
+        System.out.println(n);
+        int index = 0;
+        if(n==2){
+            if(nums[0]<nums[1]){
+                index = 1;
+                return index;
+            }
+            else return index;
+        }
+        if(n>2){
+            if(nums[n-1]>nums[n-2]){
+                index= n-1;
+                return index;
+            }
+            for(int i=1;i<n-1;i++){
+                if(nums[i]>=nums[i-1] && nums[i]>=nums[i+1]){
+                    return i;
+                }
+            }
+        }
+        return index;
+    }
+}
+
+
+//Number of occurrence
+//without binary search
+class Solution {
+    ArrayList<Integer> temp=new ArrayList<>();
+    int count(int[] arr, int n, int x) {
+        // code here
+        for(int i:arr){
+            temp.add(i);
+        }
+        int start = temp.indexOf(x);
+        int end = temp.lastIndexOf(x);
+        if(temp.contains(x)){
+            return end-start+1;        
+        }
+    return 0;
+    }
+}
+//with binarysearch
+
+
+//User function Template for Java
+
+
+
+class Solution {
+    ArrayList<Integer> temp=new ArrayList<>();
+    int bs1(int[] arr,int start,int end,int target){
+        if(start>=end){
+            return start;
+        }
+        int mid = (start+end)/ 2;
+        if(mid > 0 && arr[mid] == target && arr[mid-1] != target){
+            return mid;
+        }
+        if(arr[mid] >= target){
+            return bs1(arr,start,mid-1,target);
+        }
+        return bs1(arr,mid+1,end,target);
+    }
+    int bs2(int[] arr,int start,int end,int target){
+        if(start>=end){
+            return start;
+        }
+        int mid = (start+end) / 2;
+        if(mid+1 <= end && arr[mid] == target && arr[mid+1] != target){
+            return mid;
+        }
+        if(arr[mid] > target){
+            return bs2(arr,start,mid-1,target);
+        }
+        return bs2(arr,mid+1,end,target);
+    }
+    int count(int[] arr, int n, int x) {
+        // code here
+        int start=bs1(arr,0,n-1,x);
+        int end=bs2(arr,0,n-1,x);
+        if(arr[start]!=x) {return 0;}
+        if(arr[end]!=x) {return 0;}
+        return end-start+1;
+    }
+}
