@@ -112,3 +112,41 @@ class Solution {
         return end-start+1;
     }
 }
+
+
+//find the kth missing no in the array
+class Complete{
+    boolean contains(int[] arr,int n, int position){
+        int start = 0,end = n-1;
+        while(start <= end){
+            int mid = start + (end - start) / 2;
+            if(arr[mid] == position){
+                return true;
+            }
+            else if(mid < n -1 && mid>0  && arr[mid - 1] < position && arr[mid + 1] > position){
+                return false;
+            }
+            else if(arr[mid] > position){
+                end = mid - 1;
+            } else{
+                start = mid + 1;
+            }
+        }
+        return false;
+    }
+    int KthMissingElement(int a[], int n, int k)
+    {
+        // Complete the function
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i : a){
+            arr.add(i);
+        }
+        for(int i = a[0];i < a[n-1]; i++){
+            if(! contains(a,n,i)){
+                k--;
+                if(k==0) return i;
+            }
+        }
+        return -1;
+    }
+}
