@@ -115,6 +115,7 @@ class Solution {
 
 
 //find the kth missing no in the array
+//optimised approach
 class Complete{
     boolean contains(int[] arr,int n, int position){
         int start = 0,end = n-1;
@@ -150,3 +151,24 @@ class Complete{
         return -1;
     }
 }
+//optimised approach 2
+class Complete{
+    
+  
+    int KthMissingElement(int a[], int n, int k)
+{
+    // Complete the function
+    if(a[n-1]==n+a[0]-1)return -1;
+    int l=0,h=n-1;
+    while(l<=h){
+        int mid=(l+h)>>1;
+        if(a[mid]-a[0]-mid<k)l=mid+1;
+        else h=mid-1;
+    }
+    if(h>=0&&l<n)return a[0]+k+h;
+    return -1;
+}
+  
+    
+}
+
