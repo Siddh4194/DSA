@@ -1,0 +1,70 @@
+//Anagrams in the string
+//parshally correct
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        int[] num = new int[strs.length];
+        for(int i = 0;i < strs.length;i++){
+            int sum = 0;
+            for(int j = 0;j < strs[i].length(); j++){
+                sum += (int)strs[i].charAt(j);
+            }
+            num[i] = sum;
+        }
+        List<List<String>> lists = new ArrayList<>();
+        HashMap<Integer,List<String>> container = new HashMap<>();
+        for(int i = 0 ; i < num.length ; i++){
+                container.put(num[i],new ArrayList<String>());
+        }
+        for(int i = 0 ; i < num.length ; i++){
+            container.get(num[i]).add(strs[i]);
+        }
+        for (HashMap.Entry<Integer, List<String>> entry : container.entrySet()) {
+            List<String> value = entry.getValue();
+            lists.add(value);
+        }
+        return lists;
+    }
+}
+
+Optimized
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        String[] str = new String[strs.length];
+        for(int i  = 0 ; i < strs.length; i++){
+            char[] temp = strs[i].toCharArray();
+            Arrays.sort(temp);
+            str[i] = new String(temp);
+        }
+        HashMap<String,List<String>> container = new HashMap<>();
+        List<List<String >> ans = new ArrayList<>();
+        for(int i = 0 ; i < str.length ; i++){
+            container.put(str[i],new ArrayList<String>());
+        }
+        for(int i  = 0 ; i < str.length; i++){
+            container.get(str[i]).add(strs[i]);
+        }
+        for(HashMap.Entry<String,List<String>> entry: container.entrySet()){
+            List<String> value = entry.getValue();
+            ans.add(value);
+        }
+        return ans;
+    }
+}
+
+//More optimized solution 
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String,List<String>> container = new HashMap<>();
+        for(String s : strs){
+            char[] temp = s.toCharArray();
+            Arrays.sort(temp);
+            if(! container.containsKey(new String(temp))){
+                container.put(new String(temp) ,new ArrayList<String>());
+            }
+            container.get(new String(temp)).add(s);
+        }
+        return new ArrayList<>(container.values());
+    }
+}
