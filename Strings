@@ -137,3 +137,38 @@ class Solution {
         return max;
     }
 }
+
+
+// level : hard 
+// pattern matching sustring
+class Solution{
+    static boolean match(String wild, String pattern)
+    {
+        // code here
+        // if we go to the end of the string we are done out job
+        if(wild.length() == 0 && pattern.length() == 0){
+            return true;
+        }
+        //  remove all consecutive '*'
+        if(wild.length() > 1 && wild.charAt(0) == '*'){
+            int i = 0;
+            while(i + 1 < wild.length() && wild.charAt(i + 1) == '*')
+                i++;
+            wild = wild.substring(i);
+        }
+        // there is no '*' present in the string
+        if(wild.length() > 1 && wild.charAt(0) == '*' && pattern.length() == 0){
+            return false;
+        }
+        // if the string contain the ?
+        if((wild.length() > 1 && wild.charAt(0) == '?') || (wild.length() != 0 && pattern.length() != 0 && wild.charAt(0) == pattern.charAt(0))){
+            return match(wild.substring(1),pattern.substring(1));
+        }
+        
+        // if there is star then two posibilities
+        if(wild.length() > 0 && wild.charAt(0) == '*'){
+            return match(wild.substring(1),pattern) || match(wild,pattern.substring(1));
+        }
+        return false;
+    }
+}
