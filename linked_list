@@ -32,3 +32,18 @@ class Solution {
         return dummy.next;
     }
 }
+
+
+
+
+//delete a single node in the linked list
+if (nodeToDelete == null || nodeToDelete.next == null) {
+        // You cannot delete the last node or a null node.
+        return;
+    }
+    
+    // Copy the value of the next node into the current node
+    nodeToDelete.val = nodeToDelete.next.val;
+    
+    // Update the current node's next pointer to skip the next node
+    nodeToDelete.next = nodeToDelete.next.next;
