@@ -47,3 +47,29 @@ if (nodeToDelete == null || nodeToDelete.next == null) {
     
     // Update the current node's next pointer to skip the next node
     nodeToDelete.next = nodeToDelete.next.next;
+
+
+
+//remove duplicates from the sorted list
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode current = head;
+        while(current != null){
+            boolean isDuplicate = false;
+            while(current.next != null && current.val == current.next.val){
+                current = current.next;
+                isDuplicate = true;
+            }
+            if(isDuplicate){
+                prev.next = current.next;
+            } else{
+                prev = prev.next;
+            }
+            current = current.next;
+        }
+        return dummy.next;
+    }
+}
