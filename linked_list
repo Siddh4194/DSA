@@ -107,3 +107,35 @@ class GfG {
         return root;
     }
 }
+
+
+//zig zag
+class Solution {
+    public static Node zigZag(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node dummy = new Node(0); // Create a dummy node to simplify list manipulation
+        dummy.next = head;
+
+        Node left = dummy;
+        Node mid = head;
+        Node right = head.next;
+        boolean isLess = true; // Indicates whether the next swap should be < or >
+
+        while (right != null) {
+            if ((isLess && mid.data > right.data) || (!isLess && mid.data < right.data)) {
+                int temp = mid.data;
+                mid.data = right.data;
+                right.data = temp;
+            }
+
+            left = left.next;
+            mid = mid.next;
+            right = right.next;
+            isLess = !isLess; // Toggle isLess for the next iteration
+        }
+        return dummy.next;
+    }
+}
