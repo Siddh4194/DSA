@@ -139,3 +139,34 @@ class Solution {
         return dummy.next;
     }
 }
+
+// reverse the doubly linked list
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode prev;
+
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+public class ReverseDoublyLinkedList {
+    public ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // Reverse the rest of the list recursively
+        ListNode newHead = reverse(head.next);
+
+        // Swap the next and prev pointers for the current node
+        head.next = head.prev;
+        head.prev = newHead;
+
+        return head; // New head of the reversed list
+    }
+}
