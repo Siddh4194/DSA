@@ -170,3 +170,103 @@ public class ReverseDoublyLinkedList {
         return head; // New head of the reversed list
     }
 }
+
+
+//Delete nodes having greater value on right for one position
+class Solution
+{
+    Node compute(Node head)
+    {
+        // your code here
+        Node dummy = new Node(-1);
+        dummy.next = head;
+        Node prev = dummy;
+        Node current = dummy.next;
+        Node next = dummy.next.next;
+        while(next != null){
+            if(current.data < next.data){
+                prev.next = next;
+                current = next;
+                next = next.next;
+            } else{
+                prev = prev.next;
+                next = next.next;
+                current = current.next;
+            }
+        }
+        return dummy.next;
+    }
+}
+  
+// delete nodes which have higher values on the right side
+class Solution
+{
+    Node compute(Node head)
+    {
+        // your code here
+        Node p=head;
+        Node q=head;
+        Node s=head;
+        while(p.next != null){
+            int c=0;
+            q=p.next;
+            while(q!=null){
+                if( q.data > p.data){
+                    if(p == head){
+                        head = head.next;
+                        p=head;
+                        c++;
+                        break;
+                    }
+                    else{
+                        s.next=p.next;
+                        p=s;
+                        break;
+                    }
+                }
+                q=q.next;
+            }
+            if(c ==0){
+                s=p;
+                p=p.next;
+            }
+            
+        }
+        return head;
+    }
+}
+
+// odd and even separation 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        ListNode even = new ListNode(-1);
+        ListNode Estart = even;
+        ListNode odd =  new ListNode(-1);
+        ListNode Ostart = odd;
+        boolean isEven = true;
+        while(head != null){
+            if(isEven){
+                even.next = head;
+                even = even.next;
+            } else{
+                odd.next = head;
+                odd = odd.next;
+            }
+            head = head.next;
+            isEven = !isEven;
+        }
+        even.next = Ostart.next;
+        odd.next = null;
+        return Estart.next;
+    }
+}
