@@ -270,3 +270,31 @@ class Solution {
         return Estart.next;
     }
 }
+// Code for the copy the linked list
+class Clone {
+    //Function to clone a linked list with next and random pointer.
+    Node copyList(Node head) {
+        // your code here
+        // Create a mapping of original nodes to copied nodes using a HashMap
+        Map<Node, Node> nodeMap = new HashMap<>();
+
+        // First pass: Create copies of nodes without random pointers and store them in the HashMap
+        Node current = head;
+        while (current != null) {
+            nodeMap.put(current, new Node(current.data));
+            current = current.next;
+        }
+
+        // Second pass: Connect next and random pointers of copied nodes
+        current = head;
+        while (current != null) {
+            Node copiedNode = nodeMap.get(current);
+            copiedNode.next = nodeMap.get(current.next);
+            copiedNode.arb = nodeMap.get(current.arb);
+            current = current.next;
+        }
+
+        // Return the head of the copied list
+        return nodeMap.get(head);
+    }
+}
