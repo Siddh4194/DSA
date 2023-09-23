@@ -82,3 +82,42 @@ public static int isStackPermutation(int n, int[] ip, int[] op) {
         }
         return (input.isEmpty() && temp.isEmpty()) ? 1 : 0;
     }
+
+
+
+// celebrity problem
+class Solution
+{ 
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(int M[][], int n)
+    {
+    	// code here
+    	Stack<Integer> stack = new Stack<>();
+    	for(int i = 0 ; i < n; i++){
+    	    stack.push(i);
+    	}
+    	
+    	while(stack.size() > 1){
+    	    int a = stack.pop();
+    	    int b = stack.pop();
+    	   // if a knows the b then a is not the celebrity
+    	    if(M[a][b] == 1){
+    	        stack.push(b);
+    	    }
+    	   // if a dosent know the b the b is not the celebrity
+    	    else{
+    	        stack.push(a);
+    	    }
+    	}
+    	
+    	int candidate = stack.pop();
+    	
+        for(int i = 0 ; i < n; i++){
+    	    if(i != candidate && (M[i][candidate] == 0 || M[candidate][i] == 1)){
+    	        return -1;
+    	    }
+    	}
+    	
+    	return candidate;
+    }
+}
