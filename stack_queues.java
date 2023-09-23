@@ -74,3 +74,34 @@ public static String infixToPostfix(String exp) {
 }
 
 }
+
+
+// check Find if an expression has duplicate parenthesis or not
+class Solution {
+    public static int checkRedundancy(String s) {
+        // code here
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+            if (ch == ')') {
+                char top = stack.pop();
+                boolean isRedundant = true;
+
+                while (top != '(') {
+                    if (top == '+' || top == '-' || top == '*' || top == '/') {
+                        isRedundant = false;
+                    }
+                    top = stack.pop();
+                }
+
+                        // System.out.println(isRedundant);
+                if (isRedundant) {
+                    return 1; // Found redundant parentheses
+                }
+            } else {
+                stack.push(ch);
+            }
+        }
+        return 0;
+    }
+}
