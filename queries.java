@@ -28,3 +28,57 @@ class Solution {
         }
     }
 }
+
+
+// stackpermutation
+
+//Optimized solution
+class Solution {
+public static int isStackPermutation(int n, int[] ip, int[] op) {
+        Stack<Integer> st = new Stack<>();
+        int j=0;
+        
+        for(int i=0; i<n; i++) {
+            st.push(ip[i]);
+            
+            while(!st.isEmpty() && st.peek() == op[j]) {
+                st.pop();
+                j++;
+            }
+        }
+        
+        return (st.isEmpty() && (j == n)) ? 1 : 0;
+    }
+}
+
+// partially run 10 test cases are not solved
+public static int isStackPermutation(int n, int[] ip, int[] op) {
+        // code here
+        Queue<Integer> input = new LinkedList<>();
+        Queue<Integer> output = new LinkedList<>();
+        for(int i : ip){
+            input.add(i);
+        }
+        for(int i : op){
+            output.add(i);
+        }
+        Stack<Integer> temp = new Stack<>();
+        while(!input.isEmpty()){
+            int ele = input.poll();
+            
+            if(output.peek() == ele){
+                temp.push(ele);
+                while(!temp.isEmpty()){
+                    if(temp.peek() == output.peek()){
+                        temp.pop();
+                        output.poll();
+                    } else{
+                        break;
+                    }
+                }
+            } else{
+                temp.push(ele);
+            }
+        }
+        return (input.isEmpty() && temp.isEmpty()) ? 1 : 0;
+    }
