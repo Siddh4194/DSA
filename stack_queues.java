@@ -105,3 +105,59 @@ class Solution {
         return 0;
     }
 }
+
+
+
+
+
+
+class Solution
+{
+    //Function to find distance of nearest 1 in the grid for each cell.
+    public int[][] nearest(int[][] grid)
+    {
+        if(grid.length == 0 || grid[0].length == 0){
+            return null;
+        }
+        
+        int n = grid.length , m = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        int[][] distance = new int[n][m];
+        int[][] directions = {{1,0},{-1,0},{0,1},{0,-1}};
+        
+        // assign the max in the all array
+        for(int i = 0 ;i < n;i++){
+            for(int j = 0 ;j < m;j++){
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        
+        // pass values of the 1's places for further improvements
+        for(int i = 0 ;i < n;i++){
+            for(int j = 0 ;j < m;j++){
+                if(grid[i][j] == 1){
+                    queue.offer(new int[]{i,j});
+                    distance[i][j] = 0;
+                }
+            }
+        }
+        
+        // iterate through the que to operate according to the places of the 1's
+        
+        while(!queue.isEmpty()){
+            int[] cell = queue.poll();
+            int i = cell[0];
+            int j = cell[1];
+            for(int[] dir : directions){
+                int newI = i + dir[0];
+                int newJ = j + dir[1];
+                if(newI < n && newI >= 0 && newJ < m && newJ >= 0 && distance[newI][newJ] > distance[i][j] + 1){
+                    distance[newI][newJ] = distance[i][j] + 1;
+                    queue.offer(new int[]{newI,newJ});
+                }
+            }
+        }
+        
+        return distance;
+    }
+}
