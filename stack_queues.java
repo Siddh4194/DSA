@@ -161,3 +161,50 @@ class Solution
         return distance;
     }
 }
+// rotten mangose solved using the queue
+class Solution
+{
+    //Function to find minimum time required to rot all oranges. 
+    public int orangesRotting(int[][] grid)
+    {
+        // Code here
+        if(grid==null || grid.length == 0 || grid[0].length == 0){
+            return -1;
+        }
+        int n = grid.length,m = grid[0].length;
+        int[][] directions = {{1,0},{-1,0},{0,1},{0,-1}};
+        Queue<int[]> queue = new LinkedList<>();
+        
+        //assign the values to the que for the rotten oranges
+        int freshOranges = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(grid[i][j] == 2){
+                    queue.offer(new int[]{i,j,0});
+                }
+                if(grid[i][j] == 1){
+                    freshOranges++;
+                }
+            }
+        }
+        
+        int minTime = 0;
+        while(!queue.isEmpty()){
+            int[] cell = queue.poll();
+            int i = cell[0];
+            int j = cell[1];
+            int time = cell[2];
+            minTime = Math.max(time,minTime);
+            for(int[] dir : directions){
+                int newI = i + dir[0];
+                int newJ = j + dir[1];
+                if(newJ >= 0 && newJ < m && newI >= 0 && newI < n && grid[newI][newJ] == 1){
+                    queue.offer(new int[] {newI,newJ,time+1});
+                    grid[newI][newJ] = 2;
+                    freshOranges--;
+                }
+            }
+        }
+        return freshOranges == 0 ? minTime : -1;
+    }
+}
