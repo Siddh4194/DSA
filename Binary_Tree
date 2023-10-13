@@ -200,3 +200,36 @@ class GFG
 	    return ans;
 	}
 }
+// mirror element in tree using the target integer
+class Solution {
+    public Node mirror(Node root) {
+        if(root == null){
+            return null;
+        }
+        Node root1 = new Node(root.data);
+        root1.right = mirror(root.left);
+        root1.left = mirror(root.right);
+        return root1;
+    }
+    public void helper(Node root, Node root1, int target , int[] d){
+        if(root == null || root1 == null){
+            return;
+        }
+        if(root.data == target){
+            if(root1 == null){
+                d[0] = -1;
+            } else{
+                d[0] = root1.data;
+            }
+        }
+        helper(root.left, root1.left, target ,d);
+        helper(root.right, root1.right, target ,d);
+    }
+    public int findMirror(Node root, int target) {
+        Node root1 = mirror(root);
+        int[] d = new int[1];
+        d[0] = -1;
+        helper(root,root1,target,d);
+        return d[0];
+    }
+}
