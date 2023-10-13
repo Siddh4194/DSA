@@ -124,3 +124,79 @@ class Solution{
         return ans;
     }
 }
+// tree zigzag traversal
+#first approach
+class GFG
+{
+    //Function to store the zig zag order traversal of tree in a list.
+	ArrayList<Integer> zigZagTraversal(Node root)
+	{
+	    ArrayList<Integer> ans = new ArrayList<>();
+	    Queue<Node> queue = new LinkedList<>();
+	    int flag = 0;
+	    int initial = 0;
+	    queue.add(root);
+	    queue.add(null);
+	    while(!queue.isEmpty()){
+	        Node temp = queue.remove();
+	        if(temp == null){
+	            if(queue.isEmpty()){
+	                break;
+	            }else{
+	                queue.add(temp);
+	                flag = flag == 0 ? 1 : 0;
+	                initial = 0;
+	                continue;
+	            }
+	        }
+	        if(flag == 1){
+	            ans.add(ans.size() - initial,temp.data);
+	            initial++;
+	        }
+	        if(flag == 0){
+	            ans.add(temp.data);
+	        }
+	        if(temp.left != null){
+	            queue.add(temp.left);
+	        }
+	        if(temp.right != null){
+	            queue.add(temp.right);
+	        }
+	    }
+	    return ans;
+	}
+}
+#2nd approach
+class GFG
+{
+    //Function to store the zig zag order traversal of tree in a list.
+	ArrayList<Integer> zigZagTraversal(Node root)
+	{
+	    //Add your code here.
+	    ArrayList<Integer> ans = new ArrayList<>();
+	    ArrayList<Integer> temp = new ArrayList<>();
+	    Queue<Integer> que = new ArrayList<>();
+	    que.add(root);
+	    int t = 0;
+	    while(!que.isEmpty()){
+	        int size = que.size();
+	        for(int i = 0; i < size; i++){
+	            Node node = que.poll();
+	            temp.add(node.data);
+	            if(node != null && node.left != null){
+	                que.add(node.left);
+	            }
+	            if(node != null && node.right != null){
+	                que.add(node.right);
+	            }
+	        }
+	        if(t % 2 != 0){
+	           Collections.reverse(temp);
+	        }
+	        ans.addAll(temp);
+	        temp.clear();
+	        t++;
+	    }
+	    return ans;
+	}
+}
