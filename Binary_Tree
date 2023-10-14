@@ -263,3 +263,24 @@ class Solution
         }
     }
 }
+// binary tree balanced or not
+class Tree
+{
+    
+    //Function to check whether a binary tree is balanced or not.
+    int Height(Node root){
+        if(root == null){
+            return 0;
+        }
+        int left = Height(root.left);
+        int right = Height(root.right);
+        if(left == -1 || right == -1 || Math.abs(left - right) > 1){
+            return -1;
+        }
+        return Math.max(left,right) + 1;
+    }
+    boolean isBalanced(Node root)
+    {
+        return Height(root) != -1;
+    }
+}
