@@ -284,3 +284,20 @@ class Tree
         return Height(root) != -1;
     }
 }
+// tree sum
+class Solution{
+    int calculate(Node root){
+        if(root == null){
+             return 0;
+         }
+         int original = root.data;
+         int left = calculate(root.left);
+         int right = calculate(root.right);
+         root.data = left+right;
+         return root.data + original;
+    }
+    public void toSumTree(Node root){
+         //add code here.
+         calculate(root);
+    }
+}
