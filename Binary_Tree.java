@@ -398,3 +398,55 @@ class Solution {
         return root;
     }
 }
+
+// top view of a tree using the queue arraylist and the hashmap
+class Solution
+{
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    static Info{
+        int hd;
+        Node node;
+        public Info(int hd,Node node){
+            this.hd = hd;
+            this.node = node;
+        }
+    }
+    static ArrayList<Integer> topView(Node root)
+    {
+        // add your code
+        ArayList<Integer> ans = new ArrayList<>();
+        Queue<Info> queue = new LinkedList<>();
+        HashMap<Integer,Node> map = new HashMap<>();
+        queue.add(new Info(0,root));
+        queue.add(null);
+        
+        int min = 0, max = 0;
+        while(!queue.isEmpty()){
+            Node curr = queue.remove();
+            if(curr == null){
+                if(q.isEmpty()){
+                    break;
+                } else{
+                    q.add(null);
+                }
+            }else{
+                if(!map.containsKey(curr.hd)){
+                    map.put(curr.hd,curr.node);
+                }
+                if(curr.node.left != null){
+                    queue.add(new Info(curr.hd - 1,curr.node.left));
+                    min = Math.min(min,curr.hd - 1);
+                }
+                if(curr.node.right != null){
+                    queue.add(new Info(curr.hd + 1,curr.node.right));
+                    min = Math.max(max,curr.hd + 1);
+                }
+            }
+        }
+        for(int i = min; i <= max; i++){
+            ans.add(map.get(i).data);
+        }
+        return ans;
+    }
+}
