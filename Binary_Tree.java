@@ -450,3 +450,42 @@ class Solution
         return ans;
     }
 }
+// bottom view of the binary tree
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    static class Pair{
+        int data;
+        int vd;
+        public Pair(int vd,int data){
+            this.data = data;
+            this.vd = vd;
+        }
+    }
+    void helper(Node root,int hd,int vd,TreeMap<Integer,Pair> map){
+        if(root == null){
+            return;
+        }
+        helper(root.left,hd-1,vd+1,map);
+        helper(root.right,hd+1,vd+1,map);
+        if(map.containsKey(hd)){
+            Pair p = map.get(hd);
+            if(p.vd <= vd){
+                map.put(hd,new Pair(vd,root.data));
+            }
+        } else{
+                map.put(hd,new Pair(vd,root.data));
+        }
+    }
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        // Code here
+        ArrayList<Integer>  ans = new ArrayList<>();
+        TreeMap<Integer,Pair> map = new TreeMap<>();
+        helper(root,0,0,map);
+        map.forEach((el,value)->{
+            ans.add(value.data);
+        });
+        return ans;
+    }
+} 
