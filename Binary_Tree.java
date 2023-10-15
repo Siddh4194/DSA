@@ -340,6 +340,7 @@ class Solution {
     }
 }
 // build tree from inorder and preorder arrays
+//1st approach
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder == null || inorder == null || preorder.length == 0 || inorder.length == 0) {
@@ -368,6 +369,32 @@ class Solution {
         root.left = buildTreeHelper(preorder, inorder, preStart + 1, inStart, inIndex - 1);
         root.right = buildTreeHelper(preorder, inorder, preStart + (inIndex - inStart) + 1, inIndex + 1, inEnd);
 
+        return root;
+    }
+}
+
+// 2nd approach
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int len = inorder.length;
+        for(int i = 0; i < len; i++){
+            map.put(inorder[i],i);
+        }
+        return buildTreeHelper(preorder,map,0,inorder.length - 1);
+    }
+    int preOrderIdx = 0;
+    public TreeNode buildTreeHelper(int[] preorder,HashMap<Integer,Integer> map,int left,int right){
+        if(left > right){
+            return null;
+        }
+        int pval = preorder[preOrderIdx];
+        TreeNode root = new TreeNode(pval);
+        int inorderIdx = map.get(pval);
+        preOrderIdx++;
+
+        root.left = buildTreeHelper(preorder,map,left,inorderIdx - 1);
+        root.right = buildTreeHelper(preorder,map,inorderIdx + 1,right);
         return root;
     }
 }
