@@ -489,3 +489,58 @@ class Solution
         return ans;
     }
 } 
+
+
+// the border of the binarytree
+class Solution
+{
+	ArrayList <Integer> boundary(Node node)
+	{
+	    ArrayList<Integer> traversal = new ArrayList<>();
+	    if(node.left == null && node.right == null){
+	        traversal.add(node.data);
+	        return traversal;
+	    }
+	    traversal.add(node.data);
+	   // left
+	   leftView(node.left,traversal);
+	   //leaf nodes
+	   leafView(node,traversal);
+	   //right
+	   rightView(node.right,traversal);
+	   return traversal;
+	}
+	void leftView(Node node, ArrayList<Integer> traversal){
+	    if(node == null || (node.left == null && node.right == null)){
+	        return;
+	    }
+	    traversal.add(node.data);
+	    if(node.left!=null){
+	        leftView(node.left,traversal);
+	    } else if(node.right!=null){
+	        leftView(node.right,traversal);
+	    }
+	}
+	void rightView(Node node, ArrayList<Integer> traversal){
+	    if(node == null || (node.left == null && node.right == null)){
+	        return;
+	    }
+	    if(node.right!=null){
+	        rightView(node.right,traversal);
+	    } else if(node.left!=null){
+	        rightView(node.left,traversal);
+	    }
+	    traversal.add(node.data);
+	}
+	void leafView(Node node, ArrayList<Integer> traversal){
+	    if(node == null){
+	        return;
+	    }
+	    if(node.left == null && node.right == null){
+	        traversal.add(node.data);
+	        return;
+	    }
+	    leafView(node.left,traversal);
+	    leafView(node.right,traversal);
+	}
+}
