@@ -594,3 +594,49 @@ Solution {
     }
 }
         
+//  binary tree to the binary search tree
+class Solution {
+    public static int minSwaps(int n, int[] A) {
+        ArrayList<Integer> ar = new ArrayList<>();
+        inOrder(ar,A,0);
+        return findAns(ar);
+    }
+    
+    public static int findAns(ArrayList<Integer> ar) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int copyArr[] = new int[ar.size()];
+        int temp[] = new int[ar.size()];
+        for(int i = 0; i < temp.length; i++){
+            temp[i] = ar.get(i);
+        }
+        Arrays.sort(temp);
+        for(int i = 0; i < temp.length; i++){
+            map.put(temp[i],i);
+        }
+        for(int i = 0; i < temp.length; i++){
+            copyArr[i] = ar.get(i);
+        }
+        int count = 0;
+        for(int i = 0; i < temp.length; i++){
+            while(map.get(copyArr[i]) != i){
+                count++;
+                swaping(copyArr,i,map.get(copyArr[i]));
+            }
+        }
+        return count;
+    }
+    
+    public static void swaping(int[] A, int i, Integer integer){
+        int temp = A[i];
+        A[i] = A[integer];
+        A[integer] = temp;
+    }
+    public static void inOrder(ArrayList<Integer> ar,int[] A,int i){
+        if(i >= A.length){
+            return;
+        }
+        inOrder(ar,A,2*i+1);
+        ar.add(A[i]);
+        inOrder(ar,A,2*i+2);
+    }
+}
