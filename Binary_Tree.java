@@ -544,3 +544,53 @@ class Solution
 	    leafView(node.right,traversal);
 	}
 }
+
+
+// create a binary tree using the string
+Solution {
+    // public static Node preorder(Node root){
+    //     if(root == null){
+    //         return null;
+    //     }
+    //     Node node = new Node(root.data);
+    //     node.left = preorder(root.left);
+    //     preorder(root.right);
+    //     return node;
+    // }
+    public static Node structureTree(String s){
+      if (s.isEmpty()) {
+            return null;
+        }
+        int firstParen = s.indexOf("(");
+        int val = firstParen == -1 ? Integer.parseInt(s) : Integer.parseInt(s.substring(0, firstParen));
+        Node root = new Node(val);
+        if (firstParen != -1) {
+            int start = firstParen, count = 0;
+            for (int i = start; i < s.length(); i++) {
+                if (s.charAt(i) == '(') {
+                    count++;
+                } else if (s.charAt(i) == ')') {
+                    count--;
+                }
+                if (count == 0 && start == firstParen) {
+                    root.left = structureTree(s.substring(start + 1, i));
+                    start = i + 1;
+                } else if (count == 0) {
+                    root.right = structureTree(s.substring(start + 1, i));
+                }
+            }
+        }
+        return root;
+    }
+
+    public static Node treeFromString(String s) {
+        if(s == ""){
+            return null;
+        }
+        // code here
+        Node  root = structureTree(s);
+        // Node node = preorder(root);
+        return root;
+    }
+}
+        
