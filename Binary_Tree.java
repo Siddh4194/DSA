@@ -640,3 +640,42 @@ class Solution {
         inOrder(ar,A,2*i+2);
     }
 }
+
+// detect cycle in the graph
+
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    public boolean hasCycle(ArrayList<ArrayList<Integer>> adj,int src,boolean[] visited) {
+        ArrayDeque<Integer> dq = new ArrayDeque<>();
+        dq.add(src);
+        
+        while(dq.size() > 0){
+            int rem = dq.remove();
+            if(visited[rem]){
+                return true;
+            }
+            visited[rem] = true;
+            
+            for(Integer nbr: adj.get(rem)){
+                if(!visited[nbr]){
+                    dq.add(nbr);
+                }
+            }
+        }
+        return false;
+    }
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        boolean[] visited = new boolean[V];
+        
+        for(int i = 0; i < V; i++){
+            if(!visited[i]){
+                boolean cycle = hasCycle(adj,i,visited);
+                if(cycle){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
