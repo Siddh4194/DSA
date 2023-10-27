@@ -742,3 +742,33 @@ class Solution{
     }
     
 }
+// kth ansestor of the node using the backtracking
+class Solution {
+    public void solve(Node root, boolean[] found, int node, List<Integer> ancestors) {
+        if (root == null) {
+            return;
+        }
+        if (root.data == node) {
+            found[0] = true;
+            return;
+        }
+        solve(root.left, found, node, ancestors);
+        if (found[0]) {
+            ancestors.add(root.data);
+            return;
+        }
+        solve(root.right, found, node, ancestors);
+        if (found[0]) {
+            ancestors.add(root.data);
+        }
+    }
+
+    public int kthAncestor(Node root, int k, int node) {
+        boolean[] found = {false};
+        List<Integer> ancestors = new ArrayList<>();
+        solve(root, found, node, ancestors);
+        if (ancestors.size() < k) {
+            return -1;
+        }
+        return ancestors.get(k - 1);
+    }}
