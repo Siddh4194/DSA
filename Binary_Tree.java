@@ -743,6 +743,7 @@ class Solution{
     
 }
 // kth ansestor of the node using the backtracking
+# 1st approach
 class Solution {
     public void solve(Node root, boolean[] found, int node, List<Integer> ancestors) {
         if (root == null) {
@@ -772,3 +773,40 @@ class Solution {
         }
         return ancestors.get(k - 1);
     }}
+
+# 2nd approach
+	
+class Solution {
+    Node root;
+
+    boolean solve(Node root, int[] cnt, int node, int[] val) {
+        if (root == null)
+            return false;
+
+        if (root.data == node) {
+            return true;
+        }
+
+        boolean l = solve(root.left, cnt, node, val);
+        boolean r = solve(root.right, cnt, node, val);
+
+        if (l || r) {
+            cnt[0]--;
+            if (cnt[0] == 0)
+                val[0] = root.data;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    int kthAncestor(Node root, int k, int node) {
+        int[] cnt = new int[]{k};
+        int[] val = new int[]{-1};
+
+        solve(root, cnt, node, val);
+
+        return val[0];
+    }
+}
