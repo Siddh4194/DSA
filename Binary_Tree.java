@@ -834,3 +834,29 @@ class Solution {
         return newPath;
     }
 }
+// Binary to DLL(Doubly Linked List)
+class Solution
+{
+    //Function to convert binary tree to doubly linked list and return it.
+    Node head,prev = null;
+    Node bToDLL(Node root)
+    {
+	//  Your code here	
+	inOrder(root);
+	return head;
+    }
+    void inOrder(Node root){
+        if(root == null){
+            return;
+        }
+        inOrder(root.left);
+        if(head == null){
+            head = root;
+        } else{
+            root.left = prev;
+            prev.right = root;
+        }
+        prev = root;
+        inOrder(root.right);
+    }
+}
