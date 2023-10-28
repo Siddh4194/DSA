@@ -810,3 +810,27 @@ class Solution {
         return val[0];
     }
 }
+// Binary tree maximum path sum
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        int[] maxPath = new int[1];
+        maxPath[0] = Integer.MIN_VALUE;
+        solver(root,maxPath);
+        return maxPath[0];
+    }
+    public int solver(TreeNode root,int[] maxPath){
+        if(root == null) return 0;
+        // get the left sum
+        int lSum = solver(root.left,maxPath);
+        // get the right sum
+        int rSum = solver(root.right,maxPath);
+        // add the new sum of right and left sum and the root.val also and pass to the maxPath
+        maxPath[0] = Math.max(maxPath[0],lSum + rSum + root.val);
+        // get the max from the (left or right) and the root.val or the root val 
+        int newPath = Math.max(root.val,Math.max(lSum,rSum) + root.val);
+        // find the max path for the previous path and the new 
+        maxPath[0] = Math.max(maxPath[0],newPath);
+        // return the value of the newPath for the next iteration
+        return newPath;
+    }
+}
