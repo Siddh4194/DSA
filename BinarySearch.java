@@ -78,3 +78,54 @@ class GfG {
         return root;
     }
 }
+
+// Get the next node for every node
+// eg. 
+    //     10
+    //    /  \
+    //   8    12
+    //  /
+    // 3
+// Output will be
+3 -> 8 8 -> 10 10 -> 12 12 -> -1
+// code 
+     class Solution {
+    Node prev;
+
+    public void populateNext(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        populateNext(root.right);
+
+        root.next = prev;
+
+        prev = root;
+
+        populateNext(root.left);
+    }
+}
+
+// Marging of Two arrays
+class Solution
+{
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    List<Integer> list = new ArrayList<>();
+    public List<Integer> merge(Node root1,Node root2){
+        // Write your code here
+        inOrder(root1);
+        inOrder(root2);
+        Collections.sort(list);
+        return list;
+    }
+    public void inOrder(Node root){
+        if(root == null){
+            return;
+        }
+        inOrder(root.left);
+        list.add(root.data);
+        inOrder(root.right);
+    }
+}
