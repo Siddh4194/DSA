@@ -46,3 +46,35 @@ class Solution {
     }
 
 }
+
+// BST to balanced BST
+class GfG {
+    Node buildBalancedTree(Node root) {
+        // Add your code here.
+        List<Node> nodes = new ArrayList<>();
+
+        inOrder(root, nodes);
+
+        return constructBST(nodes, 0, nodes.size() - 1);
+    }
+
+    public void inOrder(Node root, List<Node> nodes) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left, nodes);
+        nodes.add(root);
+        inOrder(root.right, nodes);
+    }
+
+    Node constructBST(List<Node> nodes, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = start + (end - start) / 2;
+        Node root = nodes.get(mid);
+        root.left = constructBST(nodes, start, mid - 1);
+        root.right = constructBST(nodes, mid + 1, end);
+        return root;
+    }
+}
