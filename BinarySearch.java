@@ -129,3 +129,57 @@ class Solution
         inOrder(root.right);
     }
 }
+// replace every no
+class Solution {
+    class Node{
+        int data;
+        Node left;
+        Node right;
+        public Node(int value){
+            this.data = value;
+        }
+    }
+    public Node gr = null;
+    
+    public Node insert(int value, Node parent, Node current, boolean isLeft, Node greater){
+        Node node = new Node(value);
+        if(current == null){
+            node = new Node(value);
+            if(isLeft){
+                parent.left = node;
+            } else {
+                parent.right = node;
+            }
+            gr = greater;
+            return node;
+        }
+        if(current.data >= value){
+            node = insert(value, current, current.left, true, current);
+        } else {
+            node = insert(value, current, current.right, false, greater);
+        }
+        return node;
+    }
+    
+    public  ArrayList<Integer> findLeastGreater(int n, int[] arr) {
+        // code here
+        ArrayList<Integer> result = new ArrayList<>();
+        Node[] nodear = new Node[n];
+        Node root = new Node(arr[n-1]);
+        nodear[0] = root;
+        for(int i = n - 2; i >= 0; i--){
+            insert(arr[i], root, root, true, null);
+            nodear[i] = gr;
+        }
+        
+        for(Node node : nodear){
+            if(node == null){
+                result.add(-1);
+                continue;
+            }
+            result.add(node.data);
+        }
+        // result.add(-1);
+        return result;
+    }
+}
