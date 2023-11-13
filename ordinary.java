@@ -271,3 +271,16 @@ class Solution {
         return ans;
     }
 }
+//letter which is in uppercase
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        int count=0,t=0;
+        for(int i=0;i<word.length();i++)
+        {
+            if(Character.isLowerCase(word.charAt(i))){count++;}
+            if(i==0 && Character.isUpperCase(word.charAt(i))){t=(-1);}
+        }
+        if(count==0 || count==word.length()+t) return true;
+        return false;
+    }
+}
