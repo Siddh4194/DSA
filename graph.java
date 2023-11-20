@@ -87,3 +87,37 @@ class Solution {
         return countTriangle / 3;
     }
 }
+
+// cycle in the graph
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        boolean[] visited = new boolean[V];
+        boolean[] recursionStack = new boolean[V];
+        
+        for(int i = 0; i < V; i++){
+            if(!visited[i]){
+                if(checkCycle(i,recursionStack,visited,adj)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean checkCycle(int current , boolean[] recursionStack,boolean[] visited,ArrayList<ArrayList<Integer>> adj){
+        visited[current] = true;
+        recursionStack[current] = true;
+        
+        for(int n : adj.get(current)){
+            if(!visited[n] && checkCycle(n,recursionStack,visited,adj)){
+                return true;
+            } else if(recursionStack[n]){
+                return true;
+            }
+        }
+        
+        recursionStack[current] = false;
+        return false;
+    }
+}
