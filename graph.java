@@ -66,3 +66,24 @@ class Solution {
       }
     }
 }
+
+// number of triangles
+class Solution {
+    public static int numberOfTriangles(int n, int[][] g) {
+        if(n < 3) return 0;
+        int countTriangle = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                for(int k = 0; k < n; k++){
+                    // hint is if 0 hase connection with 2 
+                    // and the 2 has connection with the 1 then it forms the trianfle
+                    if(i != k && j!= k && j != i && g[i][j] == 1 && g[j][k] == 1 && g[k][i] == 1){
+                        countTriangle++;
+                    }
+                }
+            }
+        }
+        // divided 
+        return countTriangle / 3;
+    }
+}
