@@ -47,3 +47,22 @@ class Solution {
         return result;
     }
 }
+
+// 2d matrix color filling example
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int oldColor = image[sr][sc];
+        if(oldColor != color) search(image,sr,sc,oldColor,color);
+        return image;
+    }
+
+    public void search(int[][] image,int row,int column,int oldColor,int newColor){
+      if(image[row][column] == oldColor){
+        image[row][column] = newColor;
+        if(row >= 1) search(image,row - 1,column,oldColor,newColor);
+        if(column >= 1) search(image,row,column - 1,oldColor,newColor);
+        if(row + 1 < image.length) search(image,row + 1,column,oldColor,newColor);
+        if(column + 1 < image[0].length) search(image,row,column + 1,oldColor,newColor);
+      }
+    }
+}
