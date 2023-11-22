@@ -121,3 +121,49 @@ class Solution {
         return false;
     }
 }
+// rat in a maze
+
+class Solution {
+    public static ArrayList<String> findPath(int[][] matrix,int n) {
+        ArrayList<String> paths = new ArrayList<String>();
+        boolean[][] visited = new boolean[n][n];
+
+        if (matrix[0][0] == 1) {
+            visited[0][0] = true;
+            backtrack(matrix, 0, 0, paths, new StringBuilder(), visited);
+        }
+
+        return paths;
+    }
+
+    private static void backtrack(int[][] matrix, int x, int y, ArrayList<String> paths, StringBuilder path, boolean[][] visited) {
+        int n = matrix.length;
+
+        if (x == n - 1 && y == n - 1) {
+            paths.add(path.toString());
+            return;
+        }
+
+        char[] directions = {'U', 'D', 'L', 'R'};
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+
+        for (int i = 0; i < 4; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (isValidMove(matrix, newX, newY, visited)) {
+                visited[newX][newY] = true;
+                path.append(directions[i]);
+                backtrack(matrix, newX, newY, paths, path, visited);
+                visited[newX][newY] = false;
+                path.deleteCharAt(path.length() - 1);
+            }
+        }
+    }
+
+    private static boolean isValidMove(int[][] matrix, int x, int y, boolean[][] visited) {
+        int n = matrix.length;
+        return x >= 0 && x < n && y >= 0 && y < n && matrix[x][y] == 1 && !visited[x][y];
+    }
+}
