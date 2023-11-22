@@ -167,3 +167,49 @@ class Solution {
         return x >= 0 && x < n && y >= 0 && y < n && matrix[x][y] == 1 && !visited[x][y];
     }
 }
+
+// knight moves towards the target using the bfs
+class Solution {
+    // Function to find out minimum steps Knight needs to reach the target position.
+    public int minStepToReachTarget(int KnightPos[], int TargetPos[], int N) {
+        int[] dx = {-2, -1, 1, 2, -2, -1, 1, 2};
+        int[] dy = {-1, -2, -2, -1, 1, 2, 2, 1};
+        
+        boolean[][] visited = new boolean[N][N];
+        Queue<int[]> queue = new ArrayDeque<>();
+        
+        int startX = KnightPos[0] - 1;
+        int startY = KnightPos[1] - 1;
+        int targetX = TargetPos[0] - 1;
+        int targetY = TargetPos[1] - 1;
+        
+        visited[startX][startY] = true;
+        queue.add(new int[]{startX,startY,0});
+        while(!queue.isEmpty()){
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
+            int steps = current[2];
+            
+            // if target is meeted then return
+            if(x == targetX && y == targetY){
+                return steps;
+            }
+            
+            for(int i = 0; i < 8; i++){
+                // move x and y for knight next moves
+                int newX = x + dx[i];
+                int newY = y + dy[i];
+                if(isValidMove(newX,newY,N,visited)){
+                    visited[newX][newY] = true;
+                    queue.add(new int[]{newX,newY,steps + 1});
+                }
+            }
+        }
+        return -1;
+    }
+
+    private static boolean isValidMove(int x, int y, int N, boolean[][] visited) {
+        return x >= 0 && x < N && y >= 0 && y < N && !visited[x][y];
+    }
+}
