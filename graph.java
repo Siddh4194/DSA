@@ -311,3 +311,39 @@ class Solution {
         }
     }
 }
+// topological sort
+
+class Solution {
+    // Function to return list containing vertices in Topological order.
+    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visited = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                topoSortUtil(i, adj, visited, stack);
+            }
+        }
+
+        int[] result = new int[V];
+        int index = 0;
+
+        while (!stack.isEmpty()) {
+            result[index++] = stack.pop();
+        }
+
+        return result;
+    }
+
+    private static void topoSortUtil(int v, ArrayList<ArrayList<Integer>> adj, boolean[] visited, Stack<Integer> stack) {
+        visited[v] = true;
+
+        for (int neighbor : adj.get(v)) {
+            if (!visited[neighbor]) {
+                topoSortUtil(neighbor, adj, visited, stack);
+            }
+        }
+
+        stack.push(v);
+    }
+}
