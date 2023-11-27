@@ -213,3 +213,60 @@ class Solution {
         return x >= 0 && x < N && y >= 0 && y < N && !visited[x][y];
     }
 }
+// make connection which are needed using graphs
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        if (connections.length < n - 1) {
+            return -1;
+        }
+
+        int[] parent = new int[n];
+        int[] rank = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 1;
+        }
+
+        for (int[] connection : connections) {
+            int root1 = find(connection[0], parent);
+            int root2 = find(connection[1], parent);
+
+            if (root1 != root2) {
+                union(root1, root2, parent, rank);
+            }
+        }
+
+        int components = 0;
+        for (int i = 0; i < n; i++) {
+            if (parent[i] == i) {
+                components++;
+            }
+        }
+
+        return components - 1;
+    }
+
+    private int find(int x, int[] parent) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x], parent);
+        }
+        return parent[x];
+    }
+
+    private void union(int x, int y, int[] parent, int[] rank) {
+        int rootX = find(x, parent);
+        int rootY = find(y, parent);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+}
