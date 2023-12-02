@@ -183,3 +183,57 @@ class Solution {
         return result;
     }
 }
+// binary search tree Search in Rotated Sorted Array
+public class Solution {
+
+    public int binarySearch(int[] nums, int x, int low, int high) {
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (mid < 0 || mid >= nums.length) {
+                return -1;
+            }
+
+            if (nums[mid] == x) {
+                return mid;
+            } else if (nums[mid] < x) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    public int findPivot(int[] nums) {
+        int low = 0, high = nums.length - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (mid < high && nums[mid + 1] < nums[mid]) {
+                return mid + 1;
+            } else if (low < mid && nums[mid - 1] > nums[mid]) {
+                return mid;
+            } else if (nums[mid] <= nums[low]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    public int search(int[] nums, int target) {
+        int pivot = findPivot(nums);
+        if (pivot == -1) {
+            return binarySearch(nums, target, 0, nums.length - 1);
+        }
+
+        if (nums[0] <= target) {
+            return binarySearch(nums, target, 0, pivot - 1);
+        } else {
+            return binarySearch(nums, target, pivot, nums.length - 1);
+        }
+    }
+}
