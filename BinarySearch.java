@@ -237,3 +237,35 @@ public class Solution {
         }
     }
 }
+// finding insertion position
+class Solution {
+    public int binarySearch(int[] nums,int x,int low,int high){
+      while (low <= high) {
+              int mid = low + (high - low) / 2;
+
+              if(nums[mid] == x){
+                return mid;
+              }
+
+              if (mid < 0 || mid + 1>= nums.length) {
+                  return -1;
+              }
+               if (nums[mid] < x && nums[mid + 1] > x) {
+                  return mid + 1;
+              } else if (nums[mid] < x) {
+                  low = mid + 1;
+              } else {
+                  high = mid - 1;
+              }
+          }
+
+          return -1;
+      }
+    public int searchInsert(int[] nums, int target) {
+      if(nums[0] > target){
+        return 0;
+      }
+      int ans = binarySearch(nums,target,0,nums.length - 1);
+      return ans == -1 ? nums.length : ans;
+    }
+}
