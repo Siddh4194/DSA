@@ -243,3 +243,51 @@ public class Solution {
         }
     }
 }
+
+// tree 
+
+// tree maximum height
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null){
+          return 0;
+        }
+
+        int leftHeight = maxDepth(root.left);
+        int rightHeight = maxDepth(root.right);
+        int maxheight = Math.max(leftHeight,rightHeight) + 1;
+
+        return maxheight;
+    }
+}
+
+// check for the same tree
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+      if(p == null && q == null){
+        return true;
+      }
+      if(p == null || q == null){
+        return false;
+      }
+      if(p.val != q.val){
+        return false;
+      }
+      return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+    }
+}
