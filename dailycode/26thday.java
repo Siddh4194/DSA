@@ -291,3 +291,26 @@ class Solution {
       return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
     }
 }
+
+// binery tree maximum path sum
+class Solution {
+    public int maxPathSum(TreeNode root) {
+      int[] maxPath = new int[1];
+      maxPath[0] = Integer.MIN_VALUE;
+      solver(root,maxPath);
+      return maxPath[0];
+    }
+    public static int solver(TreeNode root, int[] maxPath){
+      if(root == null){
+        return 0;
+      }
+
+      int lSum = solver(root.left,maxPath);
+      int rSum = solver(root.right,maxPath);
+
+      maxPath[0] = Math.max( maxPath[0] ,lSum + rSum + root.val);
+      int newPath = Math.max(root.val,Math.max(lSum,rSum) + root.val);
+      maxPath[0] = Math.max(maxPath[0],newPath);
+      return newPath;
+    }
+}
