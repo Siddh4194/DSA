@@ -84,3 +84,21 @@ class Solution {
       return ans;
     }
 }
+
+// reversing the bits in the no public class Solution {
+// you need treat n as an unsigned value
+public int reverseBits(int n) {
+int reversed = 0;
+for(int i = 0; i < 32; i++){
+  // if the binary no is 111 we move the no by one 110 to add new bit at the 0 bit
+  reversed <<= 1;
+
+  // now at the rightmost element of n and the reversed rightmost element is added
+  reversed |= n & 1;
+
+  // now the n no is shifted to the right to get the new no
+  n >>>= 1;
+}
+return reversed;
+}
+}
