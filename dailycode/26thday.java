@@ -142,3 +142,23 @@ class Solution {
         return dummy.next;
     }
 }
+
+// detect cycle in the linkedlist
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null || head.next == null){
+            return false; //there is no cycle if the two values only present in the list
+        }
+        ListNode fastStep = head;
+        ListNode slowStep = head;
+
+        while(fastStep != null && fastStep.next != null){
+            fastStep = fastStep.next.next;
+            slowStep = slowStep.next;
+            if(fastStep == slowStep){
+                return true;
+            }
+        }
+        return false;
+    }
+}
