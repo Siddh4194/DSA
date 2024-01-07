@@ -52,3 +52,35 @@ class Solution {// time complexity is O(n) and space complexity is O(1)  which i
         return maxArea;
     }
 }
+// bitwise operation addition
+class Solution {
+    public int getSum(int a, int b) {
+        while(b != 0){
+          int carry = a & b;
+          a = a ^ b;
+          b = carry << 1;
+        }
+        return a;
+    }
+}
+
+// give back the no of bits for the index of array return the array
+class Solution {
+  public static int noOfBits(int n){
+    int count = 0;
+    while(n!=0){
+      // check the rightmost bit if there is 1 then increase the count
+      count += n & 1;
+      n >>>= 1;
+    }
+    return count;
+  }
+    public int[] countBits(int n) {
+      int ans[] = new int[n+1];
+      for(int i = 0; i <= n; i++){
+        // pass every no to count the no of bits in that numbers binary bit representation
+        ans[i] = noOfBits(i);
+      }
+      return ans;
+    }
+}
