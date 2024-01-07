@@ -34,7 +34,7 @@ class Solution {
     }
 }
 // find the largest water area
-class Solution {
+class Solution {// time complexity is O(n) and space complexity is O(1)  which is optimized answer
     public int maxArea(int[] height) {
         int maxArea = 0;
         int left = 0,right = height.length - 1;
