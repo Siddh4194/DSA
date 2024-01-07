@@ -102,3 +102,19 @@ for(int i = 0; i < 32; i++){
 return reversed;
 }
 }
+
+// linkedList
+// reverse a linkedList
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        while(head != null){
+          ListNode temp = head.next;
+          head.next = prev;
+          prev = head;
+          head = temp;
+        }
+        // prev because the last node is saved in the prev
+        return prev;
+    }
+}
