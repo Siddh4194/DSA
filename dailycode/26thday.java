@@ -162,3 +162,84 @@ public class Solution {
         return false;
     }
 }
+
+// reorder the list
+// optimized way learn from the disussion
+class Solution {
+    public void reorderList(ListNode head) {
+        Map<Integer,ListNode> map = new HashMap<>();
+        ListNode temp = head;
+        int n=0;
+        while(temp!=null){
+          map.put(n,temp);
+          temp=temp.next;
+          n++;
+        }
+        ListNode res=null;
+        for(int i=0,j=n-1;i<=j;i++,j--){
+          head = map.get(i);
+          if(res!=null) res.next = head;          
+          res = map.get(j);
+          if(head==res)
+            break;
+          head.next=res;
+        }
+        res.next=null;
+        return;
+    }
+}
+// own way to solve the problem
+public class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode middle = findMiddle(head);
+
+        ListNode reversedSecondHalf = reverseList(middle.next);
+        middle.next = null;
+
+        mergeLists(head, reversedSecondHalf);
+    }
+
+    private ListNode findMiddle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode next;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    private void mergeLists(ListNode list1, ListNode list2) {
+        while (list2 != null) {
+            ListNode next1 = list1.next;
+            ListNode next2 = list2.next;
+
+            list1.next = list2;
+            list2.next = next1;
+
+            list1 = next1;
+            list2 = next2;
+        }
+    }
+}
