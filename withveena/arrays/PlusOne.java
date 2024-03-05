@@ -28,7 +28,7 @@ class Solution {
             }
             digits[i] = 0;
         }
-        digits = new int[digits.length + 1];
+        digits = new int[digits.length + 1]; // array add one place at the starting when we change the length of that array 
         digits[0] = 1;
         return digits;
     }
